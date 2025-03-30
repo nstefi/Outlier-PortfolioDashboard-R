@@ -1,6 +1,11 @@
 // postbuild.js - creates a minimal Netlify function for API endpoints
-const fs = require('fs');
-const path = require('path');
+import * as fs from 'fs';
+import * as path from 'path';
+import { fileURLToPath } from 'url';
+
+// Get the current directory
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 try {
   console.log('Starting minimal postbuild process for Netlify functions...');
@@ -12,7 +17,7 @@ try {
   
   // Create a simple "hello world" function to test deployment
   console.log('Creating minimal hello.js function');
-  const helloFunctionContent = `
+  const helloFunctionContent = `// CommonJS module for Netlify Functions
 exports.handler = async function(event, context) {
   return {
     statusCode: 200,
@@ -28,7 +33,7 @@ exports.handler = async function(event, context) {
   
   // Add a stocks-chart.js function
   console.log('Creating stocks-chart.js function');
-  const stocksChartContent = `
+  const stocksChartContent = `// CommonJS module for Netlify Functions
 exports.handler = async function(event, context) {
   try {
     // This is a mock implementation to get the deployment working
@@ -81,7 +86,7 @@ exports.handler = async function(event, context) {
   
   // Add a health check function
   console.log('Creating health.js function');
-  const healthFunctionContent = `
+  const healthFunctionContent = `// CommonJS module for Netlify Functions
 exports.handler = async function(event, context) {
   return {
     statusCode: 200,
