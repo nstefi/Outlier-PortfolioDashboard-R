@@ -1,7 +1,6 @@
 [build]
-  command = "npm run build"
+  command = "npm run build && npm run postbuild"
   publish = "dist"
-  functions = "dist/functions"
 
 # Redirect API requests to the server
 [[redirects]]
