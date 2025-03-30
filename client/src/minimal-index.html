@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minimal Financial Dashboard</title>
+  <link rel="stylesheet" href="/src/index.css" />
+</head>
+<body>
+  <div id="root">
+    <div class="min-h-screen bg-gray-100 p-8">
+      <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold mb-8 text-blue-800">Financial Dashboard</h1>
+        
+        <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+          <h2 class="text-xl font-semibold mb-4">API Status</h2>
+          <div id="apiStatus" class="bg-gray-100 p-4 rounded-md">
+            Loading...
+          </div>
+        </div>
+        
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h2 class="text-xl font-semibold mb-4">Navigation</h2>
+          <div class="flex flex-col space-y-2">
+            <a href="/debug.html" class="text-blue-600 hover:underline">
+              Debug API Page
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function checkApiStatus() {
+      const apiStatus = document.getElementById('apiStatus');
+      try {
+        const response = await fetch('/api/health');
+        if (!response.ok) {
+          throw new Error(`HTTP error ${response.status}`);
+        }
+        const data = await response.json();
+        
+        apiStatus.innerHTML = `
+          <div class="bg-green-100 text-green-700 p-4 rounded-md">
+            <p>API Status: ${data.status}</p>
+            <p>Last Updated: ${data.time}</p>
+          </div>
+        `;
+      } catch (error) {
+        apiStatus.innerHTML = `
+          <div class="bg-red-100 text-red-700 p-4 rounded-md">
+            <p>Error: ${error.message}</p>
+            <p>There was a problem connecting to the API.</p>
+          </div>
+        `;
+      }
+    }
+
+    window.addEventListener('load', checkApiStatus);
+  </script>
+</body>
+</html>
