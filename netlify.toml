@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build && npm run postbuild"
+  command = "npm run build --verbose && npm run postbuild --verbose"
   publish = "dist"
 
 # Redirect API requests to the server
